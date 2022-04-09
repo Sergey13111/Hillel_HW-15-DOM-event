@@ -8,10 +8,10 @@ function append(parent, el) {
   return parent.append(el);
 }
 
+const ul = document.getElementById('albums');
+
 const getAlboms = async () => {
     try {
-        const ul = document.getElementById('albums');
-
         const response = await fetch("https://jsonplaceholder.typicode.com/albums");
         const albums = await response.json();
         return albums.map(function(album) {
@@ -22,15 +22,6 @@ const getAlboms = async () => {
             button.textContent = "Delete";
             append(ul, li);
             append(li, button);
-
-            ul.addEventListener("click", (event) => {
-                const isRemoveButton = event.target.nodeName === "BUTTON";
-
-                if (isRemoveButton) {
-                    const albumBlock = event.target.closest(".album_title");
-                    albumBlock.remove();
-                } 
-            })
         });
     } catch (error) {
         return console.log(error);
@@ -38,6 +29,15 @@ const getAlboms = async () => {
 };
 
 getAlboms();
+
+ul.addEventListener("click", (event) => {
+    const isRemoveButton = event.target.nodeName === "BUTTON";
+
+    if (isRemoveButton) {
+        const albumBlock = event.target.closest(".album_title");
+        albumBlock.remove();
+    } 
+});
 
 
 
